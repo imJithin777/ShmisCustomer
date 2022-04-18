@@ -7,7 +7,7 @@
 
 import UIKit
 import CoreData
-
+let appVersion = "1.0.2"
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
