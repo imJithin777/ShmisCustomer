@@ -114,6 +114,7 @@ class SlotView: UIViewController, DashBoardConnectionDeligate, UIPopoverPresenta
         if (timeslotbnt.titleLabel?.text != "Select Time Slot" && mrNobtn.titleLabel?.text != "Select MR NO"){
             booknowbtn.isHidden = false
         }
+        print("timeIndex: \(timeIndex), selected time: \(slotArray[timeIndex]["time_from"]!)")
      }
     
     @objc func mrselect(_ notification: NSNotification) {
@@ -324,6 +325,7 @@ class SlotView: UIViewController, DashBoardConnectionDeligate, UIPopoverPresenta
             viewController.visitID = visitID
             viewController.Content = Content
             viewController.timimgArray = slotArray
+            viewController.timeIndex = timeIndex
                    if let navigator = navigationController {
                        navigator.pushViewController(viewController, animated: true)
                    }

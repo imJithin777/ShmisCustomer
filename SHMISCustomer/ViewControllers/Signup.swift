@@ -215,6 +215,7 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
         }else if (textField == password){
             confirmPassword.becomeFirstResponder()
         }else if (textField == confirmPassword){
+            scrolView.setContentOffset(.zero, animated: true)
             textField.resignFirstResponder()
         }
             
@@ -232,6 +233,14 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
         // became first responder
+        // became first responder
+        if textField == password {
+            scrolView.setContentOffset(CGPoint(x: 0, y: 100), animated: true)
+        }else  if textField == confirmPassword{
+            scrolView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+        }else{
+            scrolView.setContentOffset(.zero, animated: true)
+        }
     }
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool
@@ -426,6 +435,7 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
         let popupVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VerifyVC") as! VerificationView
         popupVC.phonenumber = phone
         popupVC.isRegister = true
+        popupVC.verifyType = "REGISTRATION"
         popupVC.modalPresentationStyle = .overCurrentContext
         popupVC.modalTransitionStyle = .crossDissolve
         let pVC = popupVC.popoverPresentationController

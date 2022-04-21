@@ -40,8 +40,9 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
     var fetchDetails = Bool()
     var isotpRequested = false
     var visitID = ""
-    
+    var verifyType = ""
     let apiprovider = Api_Provider()
+    var timer = Timer()
     
     @IBOutlet var countDownLabel: UILabel!
 
@@ -63,7 +64,7 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
         actyind.isHidden = true
         CustomView()
         setupOTPTextField()
-        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
     }
     
     func CustomView(){
@@ -98,13 +99,19 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
     
     @objc func update() {
         if(count > 0) {
-            timerlbl.text = "00:\(count)"
+            if count <= 9 {
+                timerlbl.text = "00:0\(count)"
+            }else{
+                timerlbl.text = "00:\(count)"
+            }
+            
             count -= 1
             
         }else{
             timerlbl.text = "00:00"
             resendbtn.isEnabled = true
             isotpRequested = true
+            timer.invalidate()
         }
     }
     
@@ -134,13 +141,13 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
                print("phone: \(encrypted_phone!)")
                print("otp: \(encrypted_otp!)")
                var parameters = Dictionary<String, Any>()
-               parameters = ["otp_type" : "REGISTRATION", "mobileNo" : "\(encrypted_phone!)", "otp": "\(encrypted_otp!)"
+               parameters = ["otp_type" : "\(verifyType)", "mobile_no" : "\(encrypted_phone!)", "otp": "\(encrypted_otp!)"
                ]
         
                print(parameters)
                
                apiprovider.delegate = self
-               apiprovider.fetchPostapi(api: "registration", parameters: ["data": parameters], isauth: false, method: "Raw")
+               apiprovider.fetchPostapi(api: "otp-verification", parameters: ["data": parameters], isauth: false, method: "Raw")
 
                } catch {
                    print("The file could not be loaded")
@@ -181,14 +188,23 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
         loadingView.isHidden = true
         actyind.isHidden = true
         if isotpRequested{
+            isotpRequested = false
             loadingView.isHidden = true
             actyind.isHidden = true
-            AppToast.showToast(withmessage: "Resend Successful", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
-            resendbtn.isEnabled = false
-            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            if responceData["status"] as! String == "success" {
+                resendbtn.isEnabled = false
+                count = 59
+                timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+                AppToast.showToast(withmessage: "Resend Successful", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+            }else{
+                AppToast.showToast(withmessage: "\(responceData["msg"]!)", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+            }
+           
+           
         }else{
             if isRegister {
             if responceData["status"] as! String == "success" {
+                if verifyType == "REGISTRATION" {
                 var fname = ""
                 var lname = ""
                 var accesstoken = ""
@@ -215,6 +231,11 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
                 AppToast.showToast(withmessage: "Registration Successful", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                     goToHome()
+                }
+                }else{
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "gotOResetView"), object: nil)
+                    dismissPopupView()
+                    AppToast.showToast(withmessage: "Success", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
                 }
             }
             }else{
@@ -339,14 +360,15 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
         loadingView.isHidden = false
         actyind.isHidden = false
         print("key: \(UserDefaults.standard.string(forKey: "publicKey")!)")
+        print("phone: \(phone)")
           
           
            do {
 
-               let encrypted_phone =  Encryptionclass.encrypt(string: "\(UserDefaults.standard.string(forKey: "publicKey")!)", publicKey: phonenumber)
+               let encrypted_phone =  Encryptionclass.encrypt(string: "\(UserDefaults.standard.string(forKey: "publicKey")!)", publicKey: phone)
                print("phone: \(encrypted_phone!)")
                var parameters = Dictionary<String, Any>()
-               parameters = ["type" : "REGISTRATION", "mobileNo" : "\(encrypted_phone!)"
+               parameters = ["type" : "FORGOT_PASSWORD", "mobile_no" : "\(encrypted_phone!)"
                ]
         
                print(parameters)

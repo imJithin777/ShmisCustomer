@@ -296,6 +296,14 @@ class Login: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate,
     @IBAction func guest_Evnt(_ sender: Any) {
     }
     
+    @IBAction func forgotEvnt(_ sender: Any) {
+        
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ForgotPassVC") as? ForgotPassword {
+                   if let navigator = navigationController {
+                       navigator.pushViewController(viewController, animated: true)
+                   }
+               }
+    }
     
     
     

@@ -80,6 +80,8 @@
 		84D0AE1A27F0E76F00B7DCF4 /* MRSelectPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D0AE1927F0E76F00B7DCF4 /* MRSelectPopupView.swift */; };
 		84D0AE1D27F0F48200B7DCF4 /* Time.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D0AE1B27F0F48100B7DCF4 /* Time.png */; };
 		84D0AE1E27F0F48200B7DCF4 /* clipboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D0AE1C27F0F48100B7DCF4 /* clipboard.png */; };
+		84D41020281198F2001EC77F /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4101F281198F2001EC77F /* ForgotPassword.swift */; };
+		84D4102228119A6D001EC77F /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4102128119A6D001EC77F /* ResetPassword.swift */; };
 		84E163CE27F772A100E70F5A /* usericon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E163CD27F772A000E70F5A /* usericon.png */; };
 		84EB834F27DDDAF1004F4103 /* bell.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EB834E27DDDAF1004F4103 /* bell.png */; };
 		84EB835427DFA913004F4103 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB835227DFA913004F4103 /* RSAUtils.swift */; };
@@ -176,6 +178,8 @@
 		84D0AE1927F0E76F00B7DCF4 /* MRSelectPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRSelectPopupView.swift; sourceTree = "<group>"; };
 		84D0AE1B27F0F48100B7DCF4 /* Time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Time.png; sourceTree = "<group>"; };
 		84D0AE1C27F0F48100B7DCF4 /* clipboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clipboard.png; sourceTree = "<group>"; };
+		84D4101F281198F2001EC77F /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
+		84D4102128119A6D001EC77F /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
 		84E163CD27F772A000E70F5A /* usericon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usericon.png; sourceTree = "<group>"; };
 		84EB834E27DDDAF1004F4103 /* bell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bell.png; sourceTree = "<group>"; };
 		84EB835227DFA913004F4103 /* RSAUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAUtils.swift; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 				84D0AE1927F0E76F00B7DCF4 /* MRSelectPopupView.swift */,
 				8444AD9728072B09009EB92F /* ForgotMRView.swift */,
 				8444AD99280737A7009EB92F /* ForgotMrBookingView.swift */,
+				84D4101F281198F2001EC77F /* ForgotPassword.swift */,
+				84D4102128119A6D001EC77F /* ResetPassword.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -611,6 +617,7 @@
 				84D0AE0A27ED889700B7DCF4 /* AppointmentTableView.swift in Sources */,
 				847B9E9C27DB961B00AE2344 /* AppColors.swift in Sources */,
 				84F7DA4227E37039005276A5 /* ProfileView.swift in Sources */,
+				84D4102228119A6D001EC77F /* ResetPassword.swift in Sources */,
 				847B9EA027DB961B00AE2344 /* Shadow.swift in Sources */,
 				84A8D54327E4E8B600DF6E6A /* CollectionViewCell.swift in Sources */,
 				84F7DA2927E1BBCE005276A5 /* TermsNPolicyPopup.swift in Sources */,
@@ -622,6 +629,7 @@
 				847B9E9F27DB961B00AE2344 /* UIView+constraints.swift in Sources */,
 				84F7DA3E27E37009005276A5 /* ReportsView.swift in Sources */,
 				84D0AE1827F0E6B100B7DCF4 /* BookingConfirmView.swift in Sources */,
+				84D41020281198F2001EC77F /* ForgotPassword.swift in Sources */,
 				84D0AE1427F05E6600B7DCF4 /* SlotCollectionViewCell.swift in Sources */,
 				84D0AE1627F05EBC00B7DCF4 /* SlotPopupView.swift in Sources */,
 				847B9E2627DB83BD00AE2344 /* SceneDelegate.swift in Sources */,

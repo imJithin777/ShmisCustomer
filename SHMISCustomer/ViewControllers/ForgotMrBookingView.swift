@@ -114,6 +114,8 @@ class ForgotMrBookingView: UIViewController,  UITextFieldDelegate, DashBoardConn
             timeIndex = total as! Int
             tokenlbl.text = "TK\(timimgArray[timeIndex]["token"]!) - \(timimgArray[timeIndex]["time_from"]!) - \(timimgArray[timeIndex]["time_to"]!)"
             }
+        
+        print("timeIndex: \(timeIndex), selected time: \(timimgArray[timeIndex]["time_from"]!)")
      }
     
     @objc func patientSelect(_ notification: NSNotification) {

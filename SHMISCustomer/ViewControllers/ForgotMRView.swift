@@ -95,6 +95,8 @@ class ForgotMRView: UIViewController, UITextFieldDelegate, DashBoardConnectionDe
             timeIndex = total as! Int
             tokenlbl.text = "TK\(timimgArray[timeIndex]["token"]!) - \(timimgArray[timeIndex]["time_from"]!) - \(timimgArray[timeIndex]["time_to"]!)"
             }
+        
+        print("timeIndex: \(timeIndex), selected time: \(timimgArray[timeIndex]["time_from"]!)")
      }
     
     
@@ -111,6 +113,7 @@ class ForgotMRView: UIViewController, UITextFieldDelegate, DashBoardConnectionDe
                 viewController.visitID = visitID
                 viewController.Content = Content
                 viewController.timimgArray = timimgArray
+                viewController.timeIndex = timeIndex
                        if let navigator = navigationController {
                            navigator.fadeTo(viewController)
                        }
@@ -290,9 +293,13 @@ class ForgotMRView: UIViewController, UITextFieldDelegate, DashBoardConnectionDe
     @IBAction func requestbtn_Evnt(_ sender: Any) {
         if reachability.connection != .unavailable {
             if mobiletxt.text != "" {
-                loadingview.isHidden = false
-                actyind.isHidden = false
-                request()
+                if mobiletxt.text?.count == 10 {
+                    loadingview.isHidden = false
+                    actyind.isHidden = false
+                    request()
+                }else{
+                    AppToast.showToast(withmessage: "Invalid Mobile Number", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+                }
                
             }else{
                 AppToast.showToast(withmessage: "Enter Mobile Number", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
