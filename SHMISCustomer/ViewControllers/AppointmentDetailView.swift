@@ -75,6 +75,8 @@ class AppointmentDetailView: UIViewController, DashBoardConnectionDeligate, UITa
         pagingViewController.select(pagingItem: CalendarItem(date: Date()))
         
         pagingViewController.selectedScrollPosition = .left
+        
+        
        
     }
     
@@ -95,6 +97,8 @@ class AppointmentDetailView: UIViewController, DashBoardConnectionDeligate, UITa
 }
 
 extension AppointmentDetailView: PagingViewControllerInfiniteDataSource {
+   
+    
     func pagingViewController(_: PagingViewController, itemAfter pagingItem: PagingItem) -> PagingItem? {
         let calendarItem = pagingItem as! CalendarItem
         return CalendarItem(date: calendarItem.date.addingTimeInterval(86400))
@@ -102,10 +106,19 @@ extension AppointmentDetailView: PagingViewControllerInfiniteDataSource {
 
     func pagingViewController(_: PagingViewController, itemBefore pagingItem: PagingItem) -> PagingItem? {
         let calendarItem = pagingItem as! CalendarItem
-        return CalendarItem(date: calendarItem.date.addingTimeInterval(-86400))
+        let currentdate = Date()
+        if calendarItem.date < currentdate  {
+             print("date1 is earlier than date2")
+            return nil
+        }else{
+            return CalendarItem(date: calendarItem.date.addingTimeInterval(-86400))
+        }
+        
     }
 
     func pagingViewController(_: PagingViewController, viewControllerFor pagingItem: PagingItem) -> UIViewController {
+        
+        
         let calendarItem = pagingItem as! CalendarItem
         let formattedDate = DateFormatters.perfectFormatter.string(from: calendarItem.date)
         let viewController = AppointmentTableView()
@@ -113,7 +126,6 @@ extension AppointmentDetailView: PagingViewControllerInfiniteDataSource {
         viewController.deptID = deptID
         viewController.doctorID = doctorID
         viewController.date = formattedDate
-//        viewController.tableView.delegate = self
         return viewController
     
     }

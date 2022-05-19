@@ -8,7 +8,7 @@
 import UIKit
 import iOSDropDown
 import Reachability
-class BookAppointmentView: UIViewController, DashBoardConnectionDeligate, UITextFieldDelegate {
+class BookAppointmentView: UIViewController, DashBoardConnectionDeligate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate {
     
     func didFinishDashBoardConnection_Logout(_ responceData: NSMutableArray) {
         guard let windowScene = (self.view.window!.windowScene) else { return }
@@ -81,26 +81,96 @@ class BookAppointmentView: UIViewController, DashBoardConnectionDeligate, UIText
         CustomView()
         listDepartment()
        
-        deptDropField.didSelect{ [self](selectedText , index ,id) in
-           
-            loadingView.isHidden = false
-            actyind.isHidden = false
-            deptDropField.text = "\(selectedText)"
-            deptID = "\(deptList[index]["id"]!)"
-            var parameters = Dictionary<String, Any>()
-            parameters = ["branch_id" : "", "doctor_list": ["department":"\(deptList[index]["id"]!)"]]
-            print(parameters)
-            doctorDropField.optionArray = []
-            doctorDropField.selectedIndex = 0
-            listDoctor(parameters: parameters)
-        }
-        doctorDropField.didSelect{ [self](selectedText , index ,id) in
-            doctorDropField.text = "\(selectedText)"
-            doctorID = "\(doctorList[index]["doctor_id"]!)"
-        }
-        deptDropField.delegate = self
-        doctorDropField.delegate = self
+        
+//        deptDropField.didSelect(completion: { [self] (selectedText, index, id) in
+//            deptDropField.hideList()
+//
+//        })
+        
+//        doctorDropField.didSelect(completion: { [self] (selectedText, index, id) in
+//            doctorDropField.hideList()
+//
+//        })
        
+//        deptDropField.delegate = self
+//        doctorDropField.delegate = self
+        
+        let tapGestureRecognizerDepartment = UITapGestureRecognizer(target: self, action: #selector(didTapdept(_:)))
+        tapGestureRecognizerDepartment.numberOfTapsRequired = 1
+        deptDropField.addGestureRecognizer(tapGestureRecognizerDepartment)
+        
+        let tapGestureRecognizerDoctor = UITapGestureRecognizer(target: self, action: #selector(didTapdoctor(_:)))
+        tapGestureRecognizerDoctor.numberOfTapsRequired = 1
+        doctorDropField.addGestureRecognizer(tapGestureRecognizerDoctor)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.appointmentSelection(_:)), name: NSNotification.Name(rawValue: "appointmentSelection"), object: nil)
+       
+    }
+    
+    
+    @IBAction func didTapdept(_ sender: UITapGestureRecognizer) {
+        self.deptDropField.isSelected = false
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let popupVC = storyboard.instantiateViewController(withIdentifier: "AppointmentVC") as! AppointmentPopup
+        popupVC.deptList = deptList
+        popupVC.type = "Department"
+        popupVC.modalPresentationStyle = .overCurrentContext
+        popupVC.modalTransitionStyle = .crossDissolve
+               let pVC = popupVC.popoverPresentationController
+        pVC?.permittedArrowDirections = .any
+        pVC?.delegate = self
+        pVC?.sourceView = view
+        present(popupVC, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func didTapdoctor(_ sender: UITapGestureRecognizer) {
+        self.doctorDropField.isSelected = false
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let popupVC = storyboard.instantiateViewController(withIdentifier: "AppointmentVC") as! AppointmentPopup
+        popupVC.doctorList = doctorList
+        popupVC.type = "Doctor"
+        popupVC.modalPresentationStyle = .overCurrentContext
+        popupVC.modalTransitionStyle = .crossDissolve
+               let pVC = popupVC.popoverPresentationController
+        pVC?.permittedArrowDirections = .any
+        pVC?.delegate = self
+        pVC?.sourceView = view
+        present(popupVC, animated: true, completion: nil)
+        
+    }
+    
+    
+    @objc func appointmentSelection(_ notification: NSNotification) {
+        let dict = notification.object as! NSDictionary
+        var type = ""
+        var contentdata = [String:Any]()
+
+        if let akey = dict["type"]{
+            type = "\(akey)"
+            if type == "Department"{
+                if let bkey = dict["department"]{
+                    contentdata = bkey as! [String : Any]
+                    if let ckey = contentdata["department_name"]{
+                        deptDropField.text = "\(ckey)"
+                        deptID = "\(contentdata["id"]!)"
+                        var parameters = Dictionary<String, Any>()
+                        parameters = ["branch_id" : "", "doctor_list": ["department":"\(deptID)"]]
+                        print(parameters)
+                        listDoctor(parameters: parameters)
+                    }
+                }
+                
+            }else{
+                if let bkey = dict["doctor"]{
+                    contentdata = bkey as! [String : Any]
+                    if let ckey = contentdata["doctor_name"]{
+                        doctorDropField.text = "\(ckey)"
+                        doctorID = "\(contentdata["doctor_id"]!)"
+                    }
+                }
+            }
+        }
     }
     
     
@@ -161,6 +231,7 @@ class BookAppointmentView: UIViewController, DashBoardConnectionDeligate, UIText
          
          
          
+         
      }
      
     
@@ -191,6 +262,7 @@ class BookAppointmentView: UIViewController, DashBoardConnectionDeligate, UIText
                         stringArray.append(string)
                     }
                     deptDropField.optionArray = stringArray
+                    deptDropField.isSearchEnable = true
                     deptDropField.text = stringArray[0]
                     var parameters = Dictionary<String, Any>()
                     parameters = ["branch_id" : "", "doctor_list": ["department":""]]
@@ -206,17 +278,23 @@ class BookAppointmentView: UIViewController, DashBoardConnectionDeligate, UIText
             if responceData["status"] as? String == "success"{
                 doctorList = responceData["data"] as! [[String : Any]]
                 if doctorList.count > 0{
+                    doctorDropField.isEnabled = true
                     var stringArray = [String]()
                     var contentDictioonary = [String:Any]()
                     contentDictioonary["doctor_name"] = "All Doctors"
-                    contentDictioonary["id"] = ""
+                    contentDictioonary["doctor_id"] = ""
                     doctorList.insert(contentDictioonary, at: 0)
                     for i in 0..<doctorList.count {
                         let string = doctorList[i]["doctor_name"] as! String
                         stringArray.append(string)
                     }
                     doctorDropField.optionArray = stringArray
+                    doctorDropField.isSearchEnable = true
                     doctorDropField.text = stringArray[0]
+                }else{
+                    doctorDropField.text = "No Doctors Available"
+                    doctorID = ""
+                    doctorDropField.isEnabled = false
                 }
             }
         }

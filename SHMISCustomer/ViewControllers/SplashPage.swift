@@ -139,6 +139,7 @@ class SplashPage: UIViewController, DashBoardConnectionDeligate {
     func didFinishDashBoardConnection_Dictionary(_ responceData: NSMutableDictionary) {
         if responceData["status"] as! String == "success" {
             UserDefaults.standard.set("\(responceData["public_key"]!)", forKey: "publicKey")
+            UserDefaults.standard.set("\(responceData["tosLink"]!)", forKey: "tosLink")
            
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { [self] timer in
                 Navigate()

@@ -218,15 +218,14 @@ class BookingConfirmView: UIViewController, DashBoardConnectionDeligate {
             if iscancel {
                 iscancel = false
                 self.navigationController!.popViewController(animated: true)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-                    AppToast.showToast(withmessage: "Your Appointment is Cancelled", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
-                }
+                AppToast.showToast(withmessage: "Your Appointment is Cancelled", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
             }else if ispaylater {
                 ispaylater = false
+                AppToast.showToast(withmessage: "Your Appointment is Booked", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-                    AppToast.showToast(withmessage: "Your Appointment is Booked", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+                    goToHome()
                 }
-                goToHome()
+               
             }else{
                 
             }

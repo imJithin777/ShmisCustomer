@@ -36,7 +36,8 @@ class ProfileView: UIViewController, UITableViewDelegate, UITableViewDataSource 
         bgView.layer.insertSublayer(AppColors.gradientBg(view: bgView, colorArray: [UIColor(red: 253/255, green: 244/255, blue: 212/255, alpha: 1.0).cgColor, UIColor.white.cgColor, UIColor(red: 253/255, green: 244/255, blue: 212/255, alpha: 1.0).cgColor], locationArray: [0.0, 0.5,1.0], isVertical: true, startpoint: CGPoint(x: 0.0, y: 1.0), endpoint: CGPoint(x: 1.0, y: 1.0), cornerradius: 0.0), at: 0)
         
        
-        namelbl.text =  UserDefaults.standard.string(forKey: "Username")?.capitalized
+        let profileName = UserDefaults.standard.string(forKey: "Username")
+        namelbl.text =  profileName?.uppercased()
         namelbl.font = FontHelper.defaultRegularFontWithSize(size: 16)
         
         

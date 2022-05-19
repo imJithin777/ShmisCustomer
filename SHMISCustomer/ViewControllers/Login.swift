@@ -77,6 +77,7 @@ class Login: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate,
         passtxt.delegate = self
         passtxt.isSecureTextEntry = true
         CustomView()
+        guestbtn.isHidden = true
        
     }
     
@@ -239,7 +240,8 @@ class Login: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate,
         
         if reachability.connection != .unavailable {
             if usertxt.text != "" && passtxt.text != ""{
-               
+                usertxt.resignFirstResponder()
+                passtxt.resignFirstResponder()
                Login()
                
             }else{

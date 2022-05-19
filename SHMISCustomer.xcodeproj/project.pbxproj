@@ -66,6 +66,7 @@
 		84A8D54427E4E8B600DF6E6A /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A8D54227E4E8B600DF6E6A /* CollectionViewCell.xib */; };
 		84A8D54627E6059200DF6E6A /* BookAppointmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A8D54527E6059200DF6E6A /* BookAppointmentView.swift */; };
 		84A8D54827EA247400DF6E6A /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 84A8D54727EA247300DF6E6A /* close.png */; };
+		84CF74AA2835692A0076435A /* AppointmentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CF74A92835692A0076435A /* AppointmentPopup.swift */; };
 		84D0ADFF27ECEFBE00B7DCF4 /* AppointmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D0ADFE27ECEFBD00B7DCF4 /* AppointmentDetailView.swift */; };
 		84D0AE0327ECF06D00B7DCF4 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D0AE0127ECF06D00B7DCF4 /* DateFormatters.swift */; };
 		84D0AE0427ECF06D00B7DCF4 /* CalendarPagingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D0AE0227ECF06D00B7DCF4 /* CalendarPagingCell.swift */; };
@@ -82,6 +83,7 @@
 		84D0AE1E27F0F48200B7DCF4 /* clipboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D0AE1C27F0F48100B7DCF4 /* clipboard.png */; };
 		84D41020281198F2001EC77F /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4101F281198F2001EC77F /* ForgotPassword.swift */; };
 		84D4102228119A6D001EC77F /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4102128119A6D001EC77F /* ResetPassword.swift */; };
+		84E034AB28329D5400EAB503 /* TOSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E034AA28329D5400EAB503 /* TOSView.swift */; };
 		84E163CE27F772A100E70F5A /* usericon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E163CD27F772A000E70F5A /* usericon.png */; };
 		84EB834F27DDDAF1004F4103 /* bell.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EB834E27DDDAF1004F4103 /* bell.png */; };
 		84EB835427DFA913004F4103 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB835227DFA913004F4103 /* RSAUtils.swift */; };
@@ -164,6 +166,7 @@
 		84A8D54227E4E8B600DF6E6A /* CollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		84A8D54527E6059200DF6E6A /* BookAppointmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookAppointmentView.swift; sourceTree = "<group>"; };
 		84A8D54727EA247300DF6E6A /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		84CF74A92835692A0076435A /* AppointmentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentPopup.swift; sourceTree = "<group>"; };
 		84D0ADFE27ECEFBD00B7DCF4 /* AppointmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentDetailView.swift; sourceTree = "<group>"; };
 		84D0AE0127ECF06D00B7DCF4 /* DateFormatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		84D0AE0227ECF06D00B7DCF4 /* CalendarPagingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarPagingCell.swift; sourceTree = "<group>"; };
@@ -180,6 +183,7 @@
 		84D0AE1C27F0F48100B7DCF4 /* clipboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clipboard.png; sourceTree = "<group>"; };
 		84D4101F281198F2001EC77F /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		84D4102128119A6D001EC77F /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
+		84E034AA28329D5400EAB503 /* TOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOSView.swift; sourceTree = "<group>"; };
 		84E163CD27F772A000E70F5A /* usericon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usericon.png; sourceTree = "<group>"; };
 		84EB834E27DDDAF1004F4103 /* bell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bell.png; sourceTree = "<group>"; };
 		84EB835227DFA913004F4103 /* RSAUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSAUtils.swift; sourceTree = "<group>"; };
@@ -289,6 +293,8 @@
 				8444AD99280737A7009EB92F /* ForgotMrBookingView.swift */,
 				84D4101F281198F2001EC77F /* ForgotPassword.swift */,
 				84D4102128119A6D001EC77F /* ResetPassword.swift */,
+				84E034AA28329D5400EAB503 /* TOSView.swift */,
+				84CF74A92835692A0076435A /* AppointmentPopup.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -637,7 +643,9 @@
 				847B9E5B27DB92CE00AE2344 /* HomeView.swift in Sources */,
 				8444AD9828072B09009EB92F /* ForgotMRView.swift in Sources */,
 				84D0AE0327ECF06D00B7DCF4 /* DateFormatters.swift in Sources */,
+				84E034AB28329D5400EAB503 /* TOSView.swift in Sources */,
 				84EB835527DFA913004F4103 /* Encryptionclass.swift in Sources */,
+				84CF74AA2835692A0076435A /* AppointmentPopup.swift in Sources */,
 				84EB835427DFA913004F4103 /* RSAUtils.swift in Sources */,
 				84D0AE0427ECF06D00B7DCF4 /* CalendarPagingCell.swift in Sources */,
 				847B9EB727DC7A7500AE2344 /* VerificationView.swift in Sources */,

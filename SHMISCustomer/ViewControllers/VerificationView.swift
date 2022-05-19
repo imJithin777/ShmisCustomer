@@ -205,37 +205,12 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
             if isRegister {
             if responceData["status"] as! String == "success" {
                 if verifyType == "REGISTRATION" {
-                var fname = ""
-                var lname = ""
-                var accesstoken = ""
-                var refreshtoken = ""
-                var userID = ""
-                var data = [String: Any]()
-                var user_details = [String: Any]()
-                var token_details = [String: Any]()
-                if let akey = responceData["data"]{
-                    data = akey as! [String : Any]
-                    user_details = data["profileData"] as! [String : Any]
-                    token_details = data["accessData"] as! [String : Any]
-                    fname = user_details["first_name"] as! String
-                    lname = user_details["last_name"] as! String
-                    userID = user_details["user_id"] as! String
-                    accesstoken = token_details["access_token"] as! String
-                    refreshtoken = token_details["refresh_token"] as! String
-                }
-                UserDefaults.standard.set(true, forKey: "islogin")
-                UserDefaults.standard.set("\(fname) \(lname)", forKey: "Username")
-                UserDefaults.standard.set(userID, forKey: "userID")
-                UserDefaults.standard.set(accesstoken, forKey: "accessToken")
-                UserDefaults.standard.set(refreshtoken, forKey: "RefreshToken")
-                AppToast.showToast(withmessage: "Registration Successful", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-                    goToHome()
-                }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "fetchSignupApi"), object: nil)
+                    dismissPopupView()
+                    AppToast.showToast(withmessage: "Please Wait...", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
                 }else{
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "gotOResetView"), object: nil)
                     dismissPopupView()
-                    AppToast.showToast(withmessage: "Success", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
                 }
             }
             }else{
@@ -266,22 +241,21 @@ class VerificationView: UIViewController,DashBoardConnectionDeligate, UIPopoverP
                     var data = [String: Any]()
                     var user_details = [String: Any]()
                     var token_details = [String: Any]()
-                    if let akey = responceData["data"]{
-                        data = akey as! [String : Any]
-                        user_details = data["profileData"] as! [String : Any]
-                        token_details = data["accessData"] as! [String : Any]
-                        fname = user_details["first_name"] as! String
-                        lname = user_details["last_name"] as! String
-                        userID = user_details["user_id"] as! String
-                        accesstoken = token_details["access_token"] as! String
-                        refreshtoken = token_details["refresh_token"] as! String
-                    }
+                  
+                    user_details = responceData["profileData"] as! [String : Any]
+                    token_details = responceData["accessData"] as! [String : Any]
+                    fname = user_details["first_name"] as! String
+                    lname = user_details["last_name"] as! String
+                    userID = user_details["user_id"] as! String
+                    accesstoken = token_details["access_token"] as! String
+                    refreshtoken = token_details["refresh_token"] as! String
+                    
                     UserDefaults.standard.set(true, forKey: "islogin")
                     UserDefaults.standard.set("\(fname) \(lname)", forKey: "Username")
                     UserDefaults.standard.set(userID, forKey: "userID")
                     UserDefaults.standard.set(accesstoken, forKey: "accessToken")
                     UserDefaults.standard.set(refreshtoken, forKey: "RefreshToken")
-                    AppToast.showToast(withmessage: "Login Successful", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+                    AppToast.showToast(withmessage: "Login Successfull", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                         goToHome()
                     }

@@ -279,7 +279,14 @@ class TermsNPolicyPopup: UIViewController, DashBoardConnectionDeligate, UIPopove
         dismissPopupView()
     }
     
-
+    @IBAction func termsbtn_Evnt(_ sender: Any) {
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TOSVC") as? TOSView {
+                   if let navigator = navigationController {
+                       navigator.pushViewController(viewController, animated: true)
+                   }
+               }
+    }
+    
     /*
     // MARK: - Navigation
 

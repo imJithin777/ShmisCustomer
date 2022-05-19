@@ -44,6 +44,7 @@ class AppointmentTableView: UITableViewController, DashBoardConnectionDeligate {
     var doctorID = ""
     var date = ""
     var window: UIWindow?
+    var datepicker = UIDatePicker()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -378,8 +379,8 @@ class AppointmentTableView: UITableViewController, DashBoardConnectionDeligate {
         headView.addSubview(lblappointment)
         headView.addSubview(lblappointmentdate)
         headView.addSubview(imgLine1)
-        headView.addSubview(imgcalender)
-        headView.addSubview(btncalender)
+       // headView.addSubview(imgcalender)
+       // headView.addSubview(btncalender)
         headView.addSubview(lblbook)
         
         
@@ -449,6 +450,7 @@ class AppointmentTableView: UITableViewController, DashBoardConnectionDeligate {
     }
     
     
+   
     
     func loadingView(withTag tag: Int, andRect rect: CGRect) -> UIView? {
        let loadingScreen = UIView(frame: CGRect(x: 0, y: 0,

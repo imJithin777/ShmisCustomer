@@ -95,6 +95,15 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
         btnCheckBox.setImage(UIImage(named:"Checkmarkempty"), for: .normal)
         btnCheckBox.setImage(UIImage(named:"Checkmark"), for: .selected)
         CustomView()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.fetchSignupApi(_:)), name: NSNotification.Name(rawValue: "fetchSignupApi"), object: nil)
+        
+       
+    }
+    
+   
+    @objc func fetchSignupApi(_ notification: NSNotification) {
+        isotpRequested = false
+           Signup()
     }
     
     func CustomView()  {
@@ -340,14 +349,23 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
         
         if reachability.connection != .unavailable {
             if fname.text != "" && lname.text != "" && email.text != "" && phone.text != "" && password.text != "" && confirmPassword.text != ""{
+                if email.text!.isValidEmail() {
+                if phone.text?.count == 10 {
                 if password.text == confirmPassword.text {
                     if isTOCenabled {
-                        Signup()
+                        requestOTP()
                     }else{
                         AppToast.showToast(withmessage: "Please Accept the Agreement", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
                     }
                 }else{
                     AppToast.showToast(withmessage: "Password Mismatch", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+                }
+                }else{
+                    AppToast.showToast(withmessage: "Invalid Mobile Number", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+                }
+                }else{
+                    AppToast.showToast(withmessage: "Invalid EmailID", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+                    
                 }
                
             }else{
@@ -358,17 +376,8 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
             AppToast.showToast(withmessage: "Network Not Available", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
         }
         
-//        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let popupVC = storyboard.instantiateViewController(withIdentifier: "VerifyVC") as! VerificationView
-//        popupVC.phonenumber = "1234567890"
-//        popupVC.modalPresentationStyle = .overCurrentContext
-//        popupVC.modalTransitionStyle = .crossDissolve
-//               let pVC = popupVC.popoverPresentationController
-//        pVC?.permittedArrowDirections = .any
-//        pVC?.delegate = self
-//        pVC?.sourceView = (sender as! UIView)
-//        present(popupVC, animated: true, completion: nil)
     }
+    
     
     
     @objc func Signup()  {
@@ -419,7 +428,10 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
                     showVerificationPage(phone: phone.text!)
                 }
             }else{
-                requestOTP()
+                AppToast.showToast(withmessage: "Registration Successfull", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                    goToLogin()
+                }
             }
             
             }else  if responceData["status"] as! String == "invalid" {
@@ -428,6 +440,17 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
             }else{
                 AppToast.showToast(withmessage: "\(responceData["msg"]!)", withview: view, withstyle: FontHelper.defaultRegularFontWithSize(size: 15))
             }
+    }
+    
+    
+    func goToLogin()  {
+       
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC") as? Login {
+                   if let navigator = navigationController {
+                       navigator.pushViewController(viewController, animated: true)
+                   }
+               }
+        
     }
     
     
@@ -453,6 +476,7 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
            do {
                print("\(phone.text!)")
                let encrypted_phone =  Encryptionclass.encrypt(string: "\(UserDefaults.standard.string(forKey: "publicKey")!)", publicKey: phone.text!)
+               print("phoneNo: \(phone.text!)")
                print("phone: \(encrypted_phone!)")
                var parameters = Dictionary<String, Any>()
                parameters = ["type" : "REGISTRATION", "mobile_no" : "\(encrypted_phone!)"
@@ -476,7 +500,14 @@ class Signup: UIViewController, UITextFieldDelegate, DashBoardConnectionDeligate
     }
     
     
-
+    @IBAction func tNcbtn_Evnt(_ sender: Any) {
+        if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TOSVC") as? TOSView {
+                   if let navigator = navigationController {
+                       navigator.pushViewController(viewController, animated: true)
+                   }
+               }
+    }
+    
 
 
     /*
@@ -505,5 +536,14 @@ override var text: String? {
         // Add other attributes if needed
         self.attributedText = attributedText
         }
+    }
+}
+
+
+extension String {
+    func isValidEmail() -> Bool {
+        // here, `try!` will always succeed because the pattern is valid
+        let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
+        return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
     }
 }

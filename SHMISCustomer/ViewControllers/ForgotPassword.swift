@@ -199,6 +199,7 @@ class ForgotPassword: UIViewController, UITextFieldDelegate, DashBoardConnection
    
     
     @IBAction func bkEvnt(_ sender: Any) {
+        self.navigationController!.popViewController(animated: true)
     }
     
     @IBAction func submitEvnt(_ sender: Any) {

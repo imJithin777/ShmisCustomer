@@ -300,6 +300,7 @@ class ResetPassword: UIViewController, UITextFieldDelegate, DashBoardConnectionD
     
     
     @IBAction func bkEvnt(_ sender: Any) {
+        self.navigationController!.popViewController(animated: true)
     }
     
     @IBAction func submitEvnt(_ sender: Any) {
